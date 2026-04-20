@@ -1,0 +1,74 @@
+==========================================
+PANDUAN COPY FILE DARI ADMIN KE SUPER-ADMIN
+==========================================
+
+File-file berikut bisa langsung di-copy dari folder admin dan tinggal ganti:
+1. @extends('layouts.admin') → @extends('layouts.super-admin')
+2. route('admin. → route('super-admin.
+
+==========================================
+DAFTAR FILE YANG PERLU DI-COPY:
+==========================================
+
+1. ALAT CREATE
+   Dari: resources/views/admin/alat/create.blade.php
+   Ke: resources/views/super-admin/alat/create.blade.php
+
+2. ALAT EDIT
+   Dari: resources/views/admin/alat/edit.blade.php
+   Ke: resources/views/super-admin/alat/edit.blade.php
+
+3. ALAT SHOW
+   Dari: resources/views/admin/alat/show.blade.php
+   Ke: resources/views/super-admin/alat/show.blade.php
+
+4. PEMINJAMAN CREATE
+   Dari: resources/views/admin/peminjaman/create.blade.php
+   Ke: resources/views/super-admin/peminjaman/create.blade.php
+
+5. PEMINJAMAN SHOW
+   Dari: resources/views/admin/peminjaman/show.blade.php
+   Ke: resources/views/super-admin/peminjaman/show.blade.php
+
+==========================================
+CARA CEPAT (menggunakan VSCode Find & Replace):
+==========================================
+
+1. Copy file dari admin/alat atau admin/peminjaman ke super-admin/
+2. Buka file yang baru di-copy
+3. Tekan Ctrl+H (Find & Replace)
+4. Find: @extends('layouts.admin')
+   Replace: @extends('layouts.super-admin')
+5. Replace All
+
+6. Find: route('admin\.
+   Replace: route('super-admin.
+7. Replace All
+
+8. Save file
+
+Ulangi untuk setiap file yang perlu di-copy.
+
+==========================================
+ATAU GUNAKAN COMMAND LINE (di root project Laravel):
+==========================================
+
+# Untuk Alat
+cp resources/views/admin/alat/create.blade.php resources/views/super-admin/alat/create.blade.php
+cp resources/views/admin/alat/edit.blade.php resources/views/super-admin/alat/edit.blade.php
+cp resources/views/admin/alat/show.blade.php resources/views/super-admin/alat/show.blade.php
+
+# Untuk Peminjaman  
+cp resources/views/admin/peminjaman/create.blade.php resources/views/super-admin/peminjaman/create.blade.php
+cp resources/views/admin/peminjaman/show.blade.php resources/views/super-admin/peminjaman/show.blade.php
+
+# Replace layout dan routes (Linux/Mac)
+find resources/views/super-admin/ -type f -name "*.blade.php" -exec sed -i "s/@extends('layouts\.admin')/@extends('layouts.super-admin')/g" {} +
+find resources/views/super-admin/ -type f -name "*.blade.php" -exec sed -i "s/route('admin\./route('super-admin./g" {} +
+
+# Untuk Windows PowerShell
+Get-ChildItem -Path resources\views\super-admin\ -Recurse -Filter *.blade.php | ForEach-Object {
+    (Get-Content $_.FullName) -replace "@extends\('layouts\.admin'\)", "@extends('layouts.super-admin')" | Set-Content $_.FullName
+    (Get-Content $_.FullName) -replace "route\('admin\.", "route('super-admin." | Set-Content $_.FullName
+}
+

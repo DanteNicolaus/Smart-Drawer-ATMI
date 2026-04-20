@@ -1,0 +1,121 @@
+@extends('layouts.admin')
+
+@section('title', 'Edit Laci')
+
+@push('styles')
+<style>
+    .container { max-width: 700px; margin: 0 auto; padding: 30px 20px; }
+    .page-card { background: white; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
+    .card-head { background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%); color: white; padding: 20px 28px; display: flex; justify-content: space-between; align-items: center; }
+    .card-head h5 { margin: 0; font-size: 18px; font-weight: 600; }
+    .btn-back-head { padding: 8px 16px; background: rgba(255,255,255,0.2); color: white; border: 1.5px solid rgba(255,255,255,0.4); border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+    .btn-back-head:hover { background: rgba(255,255,255,0.35); color: white; }
+    .card-body { padding: 28px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-weight: 600; color: #374151; margin-bottom: 7px; font-size: 14px; }
+    .required { color: #dc2626; }
+    .form-control, .form-select { width: 100%; padding: 11px 14px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-size: 14px; transition: all 0.2s; background: #fafafa; font-family: inherit; color: #333; box-sizing: border-box; }
+    .form-control:focus, .form-select:focus { outline: none; border-color: #f6ad55; background: white; box-shadow: 0 0 0 3px rgba(246,173,85,0.12); }
+    .form-control.is-invalid { border-color: #dc2626; }
+    .invalid-feedback { color: #dc2626; font-size: 12px; margin-top: 5px; display: block; }
+    .form-control[readonly] { background: #f1f5f9; color: #64748b; cursor: not-allowed; }
+    textarea.form-control { resize: vertical; min-height: 90px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .info-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 12px 16px; margin-bottom: 24px; font-size: 13px; color: #92400e; }
+    .lab-info-box { background: linear-gradient(135deg, #ede7f6, #f3e8ff); border: 1px solid #d8b4fe; border-radius: 10px; padding: 14px 18px; margin-bottom: 24px; font-size: 14px; color: #5e35b1; display: flex; align-items: center; gap: 10px; }
+    .lab-info-box strong { font-size: 15px; }
+    .form-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #f1f5f9; }
+    .btn-cancel { padding: 11px 22px; background: #f1f5f9; color: #64748b; border: 1.5px solid #e2e8f0; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.2s; }
+    .btn-cancel:hover { background: #e2e8f0; color: #334155; }
+    .btn-update { padding: 11px 28px; background: linear-gradient(135deg, #f6ad55, #ed8936); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: inherit; transition: all 0.2s; box-shadow: 0 4px 12px rgba(246,173,85,0.35); }
+    .btn-update:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(246,173,85,0.45); }
+    @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } .form-actions { flex-direction: column-reverse; } .btn-cancel, .btn-update { width: 100%; text-align: center; } }
+</style>
+@endpush
+
+@section('content')
+<div class="container">
+    <div class="page-card">
+        <div class="card-head">
+            <h5>✏️ Edit Laci</h5>
+            <a href="{{ route('admin.laci.index') }}" class="btn-back-head">← Kembali</a>
+        </div>
+        <div class="card-body">
+
+            <div class="info-box">
+                ℹ️ Laci ini memiliki <strong>{{ $laci->alat->count() }} alat</strong> yang terdaftar.
+            </div>
+
+            {{-- Info lab otomatis, tidak bisa diubah --}}
+            <div class="lab-info-box">
+                🏫 <div>
+                    <span style="font-size:12px; opacity:0.8;">Laci ini terdaftar di lab:</span><br>
+                    <strong>{{ $adminLab->kode_lab }} — {{ $adminLab->nama_lab }}</strong>
+                    @if($adminLab->lokasi)
+                        <span style="font-size:12px; opacity:0.8;"> · {{ $adminLab->lokasi }}</span>
+                    @endif
+                </div>
+            </div>
+
+            <form action="{{ route('admin.laci.update', $laci) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="kode_laci">Kode Laci <span class="required">*</span></label>
+                        <input type="text"
+                               class="form-control @error('kode_laci') is-invalid @enderror"
+                               id="kode_laci" name="kode_laci"
+                               value="{{ old('kode_laci', $laci->kode_laci) }}"
+                               required>
+                        @error('kode_laci')<span class="invalid-feedback">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="nama_laci">Nama Laci <span class="required">*</span></label>
+                        <input type="text"
+                               class="form-control @error('nama_laci') is-invalid @enderror"
+                               id="nama_laci" name="nama_laci"
+                               value="{{ old('nama_laci', $laci->nama_laci) }}"
+                               required>
+                        @error('nama_laci')<span class="invalid-feedback">{{ $message }}</span>@enderror
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="lokasi">Lokasi</label>
+                        <input type="text"
+                               class="form-control @error('lokasi') is-invalid @enderror"
+                               id="lokasi" name="lokasi"
+                               value="{{ old('lokasi', $laci->lokasi) }}"
+                               placeholder="Contoh: Rak A Baris 1">
+                        @error('lokasi')<span class="invalid-feedback">{{ $message }}</span>@enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status <span class="required">*</span></label>
+                        <select class="form-select @error('status') is-invalid @enderror"
+                                id="status" name="status" required>
+                            <option value="aktif"    {{ old('status', $laci->status) == 'aktif'    ? 'selected' : '' }}>Aktif</option>
+                            <option value="nonaktif" {{ old('status', $laci->status) == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
+                        </select>
+                        @error('status')<span class="invalid-feedback">{{ $message }}</span>@enderror
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="deskripsi">Deskripsi</label>
+                    <textarea class="form-control @error('deskripsi') is-invalid @enderror"
+                              id="deskripsi" name="deskripsi">{{ old('deskripsi', $laci->deskripsi) }}</textarea>
+                    @error('deskripsi')<span class="invalid-feedback">{{ $message }}</span>@enderror
+                </div>
+
+                <div class="form-actions">
+                    <a href="{{ route('admin.laci.index') }}" class="btn-cancel">Batal</a>
+                    <button type="submit" class="btn-update">💾 Update Laci</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection

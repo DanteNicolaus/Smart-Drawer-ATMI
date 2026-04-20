@@ -12,6 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         // Register middleware alias untuk role checking
+        $middleware->append(\App\Http\Middleware\CheckSessionTimeout::class);
         $middleware->alias([
             'role' => \App\Http\Middleware\CheckRole::class,
         ]);

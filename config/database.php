@@ -113,6 +113,12 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        'sqlite_sync' => [
+    'driver' => 'sqlite',
+    'database' => database_path('database.sqlite'),
+    'prefix' => '',
+],
+
     ],
 
     /*

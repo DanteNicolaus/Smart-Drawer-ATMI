@@ -1,429 +1,353 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kontak - Smart Drawer ATMI</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+@extends('layouts.guest')
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+@section('title', 'Kontak - Smart Drawer ATMI')
 
-        .navbar {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+@section('content')
+<div class="contact-wrapper">
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+    {{-- Kolom Kiri: Info Kontak --}}
+    <div class="left-col">
+        <div class="brand-badge">📬 Hubungi Kami</div>
+        <h1>Kontak & <span>Dukungan</span></h1>
+        <p class="tagline">Ada pertanyaan atau kendala? Jangan ragu untuk menghubungi kami.</p>
 
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: white;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-login {
-            background: white;
-            color: #667eea;
-            padding: 0.7rem 2rem;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .hero {
-            text-align: center;
-            padding: 3rem 2rem 2rem;
-            color: white;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: fadeInDown 1s;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .contact-info {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 1s;
-        }
-
-        .contact-info h2 {
-            color: #333;
-            margin-bottom: 2rem;
-            font-size: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e0e5ec 100%);
-            border-radius: 15px;
-            transition: all 0.3s;
-        }
-
-        .info-item:hover {
-            transform: translateX(10px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .info-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            flex-shrink: 0;
-        }
-
-        .info-content h3 {
-            color: #333;
-            margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        .info-content p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .info-content a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .info-content a:hover {
-            color: #764ba2;
-        }
-
-        .contact-form {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 1s;
-        }
-
-        .contact-form h2 {
-            color: #333;
-            margin-bottom: 2rem;
-            font-size: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            color: #333;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .map-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .map-section h2 {
-            color: #333;
-            margin-bottom: 2rem;
-            font-size: 2rem;
-            text-align: center;
-        }
-
-        .map-container {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e0e5ec 100%);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .contact-info,
-            .contact-form {
-                padding: 2rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar">
-        <div class="logo">
-            <div class="logo-icon">📦</div>
-            <span>Smart Drawer ATMI</span>
-        </div>
-        <div class="nav-links">
-            <a href="{{ route('welcome') }}">Beranda</a>
-            <a href="{{ route('tentang') }}">Tentang</a>
-            <a href="{{ route('kontak') }}" class="active">Kontak</a>
-            <a href="{{ route('login') }}" class="btn-login">Login</a>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <h1>Hubungi Kami</h1>
-        <p>Kami siap membantu Anda</p>
-    </section>
-
-    <div class="container">
-        <div class="contact-grid">
-            <div class="contact-info">
-                <h2>📞 Informasi Kontak</h2>
-                
-                <div class="info-item">
-                    <div class="info-icon">📍</div>
-                    <div class="info-content">
-                        <h3>Alamat</h3>
-                        <p>Jl. Mojo No. 1, Karangasem<br>
-                        Laweyan, Surakarta<br>
-                        Jawa Tengah 57145</p>
-                    </div>
-                </div>
-
-                <div class="info-item">
-                    <div class="info-icon">📧</div>
-                    <div class="info-content">
-                        <h3>Email</h3>
-                        <p><a href="mailto:smartdrawer@atmi.ac.id">smartdrawer@atmi.ac.id</a></p>
-                        <p><a href="mailto:lab@atmi.ac.id">lab@atmi.ac.id</a></p>
-                    </div>
-                </div>
-
-                <div class="info-item">
-                    <div class="info-icon">📱</div>
-                    <div class="info-content">
-                        <h3>Telepon</h3>
-                        <p><a href="tel:+622716460300">(0271) 714466</a></p>
-                        <p>Senin - Jumat: 08.00 - 16.00 WIB</p>
-                    </div>
-                </div>
-
-                <div class="info-item">
-                    <div class="info-icon">🌐</div>
-                    <div class="info-content">
-                        <h3>Website</h3>
-                        <p><a href="https://www.atmi.ac.id" target="_blank">www.atmi.ac.id</a></p>
-                    </div>
+        <div class="contact-list">
+            <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <div>
+                    <strong>Alamat</strong>
+                    <p>Jl. Adi Sucipto No.KM 9.5, Blukukan Dua, Blulukan, Kec. Colomadu, Kabupaten Karanganyar, Jawa Tengah 57174</p>
                 </div>
             </div>
 
-            <div class="contact-form">
-                <h2>✉️ Kirim Pesan</h2>
-                <form action="#" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="name">Nama Lengkap</label>
-                        <input type="text" id="name" name="name" placeholder="Masukkan nama Anda" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Masukkan email Anda" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="subject">Subjek</label>
-                        <input type="text" id="subject" name="subject" placeholder="Subjek pesan" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message">Pesan</label>
-                        <textarea id="message" name="message" placeholder="Tulis pesan Anda di sini..." required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-submit">Kirim Pesan</button>
-                </form>
+            <div class="contact-item">
+                <div class="contact-icon">📞</div>
+                <div>
+                    <strong>Telepon / WhatsApp</strong>
+                    <p>
+                        <a href="tel:+62271634971">(0271) 634971</a><br>
+                        <a href="https://wa.me/6281234567890" target="_blank">+62 812-3456-7890</a>
+                    </p>
+                </div>
             </div>
-        </div>
 
-        <div class="map-section">
-            <h2>🗺️ Lokasi Kami</h2>
-            <div class="map-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.0886179394847!2d110.79259931477564!3d-7.565156494551234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a16627c8f2e71%3A0x5b5b5b5b5b5b5b5b!2sPoliteknik%20ATMI%20Surakarta!5e0!3m2!1sid!2sid!4v1234567890123!5m2!1sid!2sid" 
-                    width="100%" 
-                    height="100%" 
-                    style="border:0; border-radius: 15px;" 
-                    allowfullscreen="" 
-                    loading="lazy">
-                </iframe>
+            <div class="contact-item">
+                <div class="contact-icon">✉️</div>
+                <div>
+                    <strong>Email</strong>
+                    <p><a href="mailto:https://www.atmi.ac.id/">https://www.atmi.ac.id/</a></p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">🕐</div>
+                <div>
+                    <strong>Jam Operasional</strong>
+                    <p>Senin – Jumat: 08.00 – 17.00 WIB</p>
+                </div>
             </div>
         </div>
     </div>
-</body>
-</html>
+
+    {{-- Kolom Kanan: Form --}}
+    <div class="right-col">
+        <div class="form-card">
+            <div class="form-header">
+                <div class="form-header-icon">📝</div>
+                <div>
+                    <h2>Kirim Pesan</h2>
+                    <p>Isi formulir dan kami akan segera merespons.</p>
+                </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <p class="form-desc">
+                Gunakan formulir Google Form berikut untuk mengirimkan pertanyaan, saran, atau laporan kendala kepada tim Smart Drawer ATMI.
+            </p>
+
+            <div class="form-features">
+                <div class="feature-row">
+                    <span class="check">✓</span>
+                    <span>Respons dalam 1×24 jam kerja</span>
+                </div>
+                <div class="feature-row">
+                    <span class="check">✓</span>
+                    <span>Formulir aman & terverifikasi</span>
+                </div>
+                <div class="feature-row">
+                    <span class="check">✓</span>
+                    <span>Bisa melampirkan screenshot</span>
+                </div>
+            </div>
+
+            {{-- Ganti URL di bawah dengan link Google Form Anda --}}
+            <a href="https://forms.gle/FGTv6HTKBn8itm8B6" target="_blank" class="btn-gform">
+                <span class="btn-icon">📋</span>
+                Buka Google Form
+                <span class="btn-arrow">→</span>
+            </a>
+
+            <p class="form-note">
+                * Pastikan Anda login dengan akun Google sebelum mengisi formulir.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    html, body { height: 100%; overflow: hidden; }
+
+    main {
+        height: calc(100vh - 64px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        padding: 1.5rem 2rem;
+    }
+
+    .contact-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+        width: 100%;
+        max-width: 1100px;
+        animation: fadeInUp 0.7s ease-out;
+    }
+
+    /* Left Column */
+    .left-col {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .brand-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: #eff6ff;
+        color: #2563eb;
+        border: 1.5px solid #bfdbfe;
+        padding: 0.35rem 1rem;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        width: fit-content;
+    }
+
+    .left-col h1 {
+        font-size: 2.2rem;
+        color: #1e3a8a;
+        font-weight: 700;
+        line-height: 1.2;
+        margin: 0;
+    }
+
+    .left-col h1 span { color: #2563eb; }
+
+    .tagline {
+        color: #6b7280;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .contact-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+    }
+
+    .contact-item {
+        display: flex;
+        gap: 0.9rem;
+        align-items: flex-start;
+        background: white;
+        border: 1.5px solid #e0e7ff;
+        border-radius: 12px;
+        padding: 0.85rem 1.1rem;
+        box-shadow: 0 1px 6px rgba(37, 99, 235, 0.05);
+        transition: border-color dock 0.2s;
+    }
+
+    .contact-item:hover {
+        border-color: #93c5fd;
+    }
+
+    .contact-icon {
+        font-size: 1.3rem;
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+    }
+
+    .contact-item strong {
+        display: block;
+        color: #1d4ed8;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+    }
+
+    .contact-item p {
+        color: #6b7280;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .contact-item a {
+        color: #2563eb;
+        text-decoration: none;
+        font-size: 0.85rem;
+    }
+
+    .contact-item a:hover { text-decoration: underline; }
+
+    /* Right Column */
+    .right-col {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .form-card {
+        background: white;
+        border: 1.5px solid #e0e7ff;
+        border-radius: 16px;
+        padding: 1.6rem 1.8rem;
+        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.08);
+    }
+
+    .form-header {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .form-header-icon {
+        font-size: 2rem;
+        background: #eff6ff;
+        border-radius: 10px;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .form-header h2 {
+        color: #1e3a8a;
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0 0 0.15rem 0;
+    }
+
+    .form-header p {
+        color: #9ca3af;
+        font-size: 0.83rem;
+        margin: 0;
+    }
+
+    .form-divider {
+        height: 1.5px;
+        background: #e0e7ff;
+        margin-bottom: 1rem;
+    }
+
+    .form-desc {
+        color: #6b7280;
+        font-size: 0.88rem;
+        line-height: 1.7;
+        margin: 0 0 1rem 0;
+    }
+
+    .form-features {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+        margin-bottom: 1.4rem;
+    }
+
+    .feature-row {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        font-size: 0.85rem;
+        color: #4b5563;
+    }
+
+    .check {
+        width: 20px;
+        height: 20px;
+        background: #dcfce7;
+        color: #16a34a;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .btn-gform {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: white;
+        text-decoration: none;
+        padding: 0.85rem 1.5rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        transition: all 0.25s ease;
+        margin-bottom: 0.8rem;
+    }
+
+    .btn-gform:hover {
+        background: linear-gradient(135deg, #1d4ed8, #1e40af);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-icon { font-size: 1.1rem; }
+
+    .btn-arrow {
+        margin-left: auto;
+        font-size: 1.1rem;
+        transition: transform 0.2s;
+    }
+
+    .btn-gform:hover .btn-arrow { transform: translateX(4px); }
+
+    .form-note {
+        color: #9ca3af;
+        font-size: 0.78rem;
+        text-align: center;
+        margin: 0;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        html, body { overflow: auto; }
+        main { height: auto; padding: 1.5rem 1rem; }
+        .contact-wrapper { grid-template-columns: 1fr; gap: 1.5rem; }
+        .left-col h1 { font-size: 1.7rem; }
+        .form-card { padding: 1.2rem; }
+    }
+</style>
+@endsection
